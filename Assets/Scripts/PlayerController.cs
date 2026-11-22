@@ -23,5 +23,19 @@ public class PlayerController : MonoBehaviour
         pos.x += move * speed * Time.deltaTime;
         pos.x = Mathf.Clamp(pos.x, -xLimit, xLimit);
         transform.position = pos;
+    } 
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Star"))
+        {
+            GameManager.Instance.AddScore(1);
+            Destroy(other.gameObject);
+        }
+        else if (other.CompareTag("Asteroid"))
+        {
+            GameManager.Instance.LoseLife();
+            Destroy(other.gameObject);
+        }
     }
 }
