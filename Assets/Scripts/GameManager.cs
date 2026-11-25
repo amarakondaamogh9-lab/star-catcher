@@ -9,10 +9,14 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI livesText;
     public TextMeshProUGUI highScoreText;
+    public TextMeshProUGUI timerText;
+    public TextMeshProUGUI comboText;
     public GameObject gameOverPanel;
     public int lives = 3;
 
     int score;
+    float survivalTime; 
+    int combo;
 
     void Awake()
     {
@@ -26,15 +30,28 @@ public class GameManager : MonoBehaviour
         UpdateUI();
     }
 
+    void Update()
+    {
+        survivalTime += Time.deltaTime;
+
+        int minutes = (int)survivalTime / 60;
+        int seconds = (int)survivalTime % 60;
+
+        timerText.text = $"{minutes}:{seconds:00}";
+    }
+
     public void AddScore(int amount)
     {
-        score += amount;
+        combo++;
+        score += amount * GetMultiplier();
         UpdateUI();
     }
 
     public void LoseLife()
     {
+        combo = 0;
         lives--;
+        comboText.text = "Combo: " + combo + " (x" + GetMultiplier() + ")";
         UpdateUI();
 
         if (lives <= 0)
@@ -53,6 +70,27 @@ public class GameManager : MonoBehaviour
     {
         scoreText.text = "Score: " + score;
         livesText.text = "Lives: " + lives;
+        comboText.text = "Combo: " + combo + " (x" + GetMultiplier() + ")";
+    }
+
+    int GetMultiplier()
+    {
+        if (combo >= 20)
+        {
+            return 5;
+        }
+        else if (combo >= 10)
+        {
+            return 3;
+        }
+        else if (combo >= 5)
+        {
+            return 2;
+        }
+        else
+        {
+            return 1;
+        }
     }
 
     public void GameOver()
@@ -66,7 +104,7 @@ public class GameManager : MonoBehaviour
             best = score;
             PlayerPrefs.SetInt("HighScore", best);
         }
-        highScoreText.text = "High Score: " + best;
+        highScoreText.text = "High Score: " + best + "\nTime: " + timerText.text;
     }
 
     public void Restart()
