@@ -42,13 +42,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void AddLife()
+    {
+        lives++;
+        UpdateUI();
+    }
+
     void UpdateUI()
     {
         scoreText.text = "Score: " + score;
         livesText.text = "Lives: " + lives;
     }
 
-    void GameOver()
+    public void GameOver()
     {
         Time.timeScale = 0f;
         gameOverPanel.SetActive(true);
