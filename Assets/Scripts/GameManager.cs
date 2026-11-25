@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Collections; 
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     int score;
     float survivalTime; 
     int combo;
+    Coroutine popRoutine;
 
     void Awake()
     {
@@ -42,14 +44,27 @@ public class GameManager : MonoBehaviour
 
     public void AddScore(int amount)
     {
+        int oldMultiplier = GetMultiplier();
         combo++;
-        score += amount * GetMultiplier();
+        int newMultiplier = GetMultiplier();
+
+        score += amount * newMultiplier;
         UpdateUI();
+
+        if (newMultiplier > oldMultiplier)
+        {
+            PlayPop(1.8f, Color.white);
+        }
+        else
+        {
+            PlayPop(1.2f, Color.yellow);
+        }
     }
 
     public void LoseLife()
     {
         combo = 0;
+        PlayPop(0.6f, Color.red);
         lives--;
         comboText.text = "Combo: " + combo + " (x" + GetMultiplier() + ")";
         UpdateUI();
@@ -91,6 +106,36 @@ public class GameManager : MonoBehaviour
         {
             return 1;
         }
+    }
+
+    IEnumerator ComboPop(float startSize, Color flashColor)
+    {
+        float duration = 0.25f;
+        float t = 0f;
+
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float progress = t / duration;
+
+            float size = Mathf.Lerp(startSize, 1f, progress);
+            comboText.transform.localScale = Vector3.one * size;
+            comboText.color = Color.Lerp(flashColor, Color.yellow, progress);
+
+            yield return null;
+        }
+
+        comboText.transform.localScale = Vector3.one;
+        comboText.color = Color.yellow;
+    }
+
+    void PlayPop(float size, Color color)
+    {
+        if (popRoutine != null)
+        {
+            StopCoroutine(popRoutine);
+        }
+        popRoutine = StartCoroutine(ComboPop(size, color));
     }
 
     public void GameOver()
