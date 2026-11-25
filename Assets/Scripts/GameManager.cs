@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI comboText;
     public GameObject gameOverPanel;
     public int lives = 3;
+    public bool isGameOver;
 
     int score;
     float survivalTime; 
@@ -140,6 +141,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        isGameOver = true;
         Time.timeScale = 0f;
         gameOverPanel.SetActive(true);
 
