@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI livesText;
+    public TextMeshProUGUI highScoreText;
     public GameObject gameOverPanel;
     public int lives = 3;
 
@@ -58,6 +59,14 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f;
         gameOverPanel.SetActive(true);
+
+        int best = PlayerPrefs.GetInt("HighScore", 0);
+        if (score > best)
+        {
+            best = score;
+            PlayerPrefs.SetInt("HighScore", best);
+        }
+        highScoreText.text = "High Score: " + best;
     }
 
     public void Restart()
