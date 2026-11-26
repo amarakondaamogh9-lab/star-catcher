@@ -34,7 +34,15 @@ public class PlayerController : MonoBehaviour
         }
         else if (other.CompareTag("Asteroid"))
         {
-            GameManager.Instance.LoseLife();
+            if (!PowerUpManager.Instance.UseShield())
+            {
+                GameManager.Instance.LoseLife();
+            }
+            Destroy(other.gameObject);
+        }
+        else if (other.CompareTag("PowerUp"))
+        {
+            PowerUpManager.Instance.Activate(other.GetComponent<PowerUp>().type);
             Destroy(other.gameObject);
         }
     }
