@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("Star"))
         {
-            GameManager.Instance.AddScore(1);
+            GameManager.Instance.AddScore(other.GetComponent<FallingObject>().points);
             Destroy(other.gameObject);
         }
         else if (other.CompareTag("Asteroid"))
