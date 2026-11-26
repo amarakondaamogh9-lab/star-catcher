@@ -3,7 +3,9 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     public GameObject starPrefab;
-    public GameObject asteroidPrefab;
+    public GameObject[] asteroidPrefabs;
+    public GameObject goldenStarPrefab;
+    [Range(0f, 1f)] public float goldenChance = 0.1f;
     public float spawnInterval = 1f;
     public float minInterval = 0.3f;
     public float intervalDecrease = 0.01f;
@@ -38,9 +40,15 @@ public class Spawner : MonoBehaviour
         Vector3 pos = new Vector3(x, 6f, 0f);
 
         GameObject prefab;
+        
         if (Random.value < asteroidChance)
         {
-            prefab = asteroidPrefab;
+            int index = Random.Range(0, asteroidPrefabs.Length);
+            prefab = asteroidPrefabs[index];
+        }
+        else if (Random.value <goldenChance)
+        {
+            prefab = goldenStarPrefab;
         }
         else
         {

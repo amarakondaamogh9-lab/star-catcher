@@ -164,7 +164,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Spawner
   starPrefab: {fileID: 4090784210990522703, guid: 3f87b7dde342b124ebc465abf916edb5, type: 3}
-  asteroidPrefab: {fileID: 709795811347697705, guid: b775f6725f15c764997dacb866076485, type: 3}
+  asteroidPrefabs:
+  - {fileID: 709795811347697705, guid: b775f6725f15c764997dacb866076485, type: 3}
+  - {fileID: 709795811347697705, guid: b775f6725f15c764997dacb866076485, type: 3}
+  - {fileID: 709795811347697705, guid: b775f6725f15c764997dacb866076485, type: 3}
+  - {fileID: 709795811347697705, guid: 82556321347a6d54390865030b035aa3, type: 3}
+  - {fileID: 709795811347697705, guid: 82556321347a6d54390865030b035aa3, type: 3}
+  - {fileID: 709795811347697705, guid: 635491695716806419660e5aa80ff98e, type: 3}
+  - {fileID: 709795811347697705, guid: 635491695716806419660e5aa80ff98e, type: 3}
+  goldenStarPrefab: {fileID: 4090784210990522703, guid: 9693572be9f85744a8b167bdaf04ceac, type: 3}
+  goldenChance: 0.1
   spawnInterval: 1
   minInterval: 0.3
   intervalDecrease: 0.01
