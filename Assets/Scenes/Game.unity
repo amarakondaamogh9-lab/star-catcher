@@ -175,6 +175,7 @@ MonoBehaviour:
   goldenStarPrefab: {fileID: 4090784210990522703, guid: 9693572be9f85744a8b167bdaf04ceac, type: 3}
   powerUpPrefabs:
   - {fileID: 4090784210990522703, guid: ff23dece6a8c95b4792769247a7496b7, type: 3}
+  - {fileID: 4090784210990522703, guid: 83b53333d0e05a44cb22e7c8c036ed14, type: 3}
   powerUpChance: 0.05
   goldenChance: 0.1
   spawnInterval: 1
@@ -774,6 +775,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PowerUpManager
   shieldVisual: {fileID: 338864921}
+  slowDuration: 5
 --- !u!1 &424177189
 GameObject:
   m_ObjectHideFlags: 0
