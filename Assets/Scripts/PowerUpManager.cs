@@ -1,10 +1,12 @@
 using UnityEngine;
+using TMPro;
 
 public class PowerUpManager : MonoBehaviour
 {
     public static PowerUpManager Instance;
 
     public GameObject shieldVisual;
+    public TextMeshProUGUI powerUpText;
     public float slowDuration = 5f;
     public float magnetDuration = 5f;
     public float magnetRadius = 5f;
@@ -42,6 +44,8 @@ public class PowerUpManager : MonoBehaviour
             magnetTimer -= Time.deltaTime;
             PullStars();
         }
+        
+        UpdatePowerUpText();
     }
 
     void PullStars()
@@ -61,6 +65,28 @@ public class PowerUpManager : MonoBehaviour
                 );
             }
         }
+    }
+
+    void UpdatePowerUpText()
+    {
+        string text = "";
+
+        if (hasShield)
+        {
+            text += "<color=#00E5FF>SHIELD</color>\n";
+        }
+
+        if (slowTimer > 0f)
+        {
+            text += "<color=#76FF03>SLOW " + Mathf.CeilToInt(slowTimer) + "s</color>\n";
+        }
+
+        if (magnetTimer > 0f)
+        {
+            text += "<color=#FF4081>MAGNET " + Mathf.CeilToInt(magnetTimer) + "s</color>\n";
+        }
+
+        powerUpText.text = text;
     }
 
     public void Activate(PowerUpType type)
