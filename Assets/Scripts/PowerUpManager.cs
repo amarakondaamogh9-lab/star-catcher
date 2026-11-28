@@ -44,7 +44,7 @@ public class PowerUpManager : MonoBehaviour
             magnetTimer -= Time.deltaTime;
             PullStars();
         }
-        
+
         UpdatePowerUpText();
     }
 
