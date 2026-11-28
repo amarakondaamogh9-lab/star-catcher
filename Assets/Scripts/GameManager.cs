@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
-using System.Collections; 
 using System;
 
 public class GameManager : MonoBehaviour
@@ -9,18 +8,17 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public static event Action<int> OnScoreChanged;
     public static event Action<int> OnLivesChanged;
+    public static event Action<int, int> OnComboChanged;
 
     public TextMeshProUGUI highScoreText;
     public TextMeshProUGUI timerText;
-    public TextMeshProUGUI comboText;
     public GameObject gameOverPanel;
     public int lives = 3;
     public bool isGameOver;
 
     int score;
-    float survivalTime; 
+    float survivalTime;
     int combo;
-    Coroutine popRoutine;
 
     void Awake()
     {
@@ -46,35 +44,9 @@ public class GameManager : MonoBehaviour
 
     public void AddScore(int amount)
     {
-        int oldMultiplier = GetMultiplier();
         combo++;
-        int newMultiplier = GetMultiplier();
-
-        score += amount * newMultiplier;
+        score += amount * GetMultiplier();
         UpdateUI();
-
-        if (newMultiplier > oldMultiplier)
-        {
-            PlayPop(1.8f, Color.white);
-        }
-        else
-        {
-            PlayPop(1.2f, Color.yellow);
-        }
-    }
-
-    public void LoseLife()
-    {
-        combo = 0;
-        PlayPop(0.6f, Color.red);
-        lives--;
-        comboText.text = "Combo: " + combo + " (x" + GetMultiplier() + ")";
-        UpdateUI();
-
-        if (lives <= 0)
-        {
-            GameOver();
-        }
     }
 
     public void AddLife()
@@ -83,12 +55,23 @@ public class GameManager : MonoBehaviour
         UpdateUI();
     }
 
+    public void LoseLife()
+    {
+        combo = 0;
+        lives--;
+        UpdateUI();
+
+        if (lives <= 0)
+        {
+            GameOver();
+        }
+    }
+
     void UpdateUI()
     {
-        comboText.text = "Combo: " + combo + " (x" + GetMultiplier() + ")";
-
         OnScoreChanged?.Invoke(score);
         OnLivesChanged?.Invoke(lives);
+        OnComboChanged?.Invoke(combo, GetMultiplier());
     }
 
     int GetMultiplier()
@@ -111,36 +94,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    IEnumerator ComboPop(float startSize, Color flashColor)
-    {
-        float duration = 0.25f;
-        float t = 0f;
-
-        while (t < duration)
-        {
-            t += Time.deltaTime;
-            float progress = t / duration;
-
-            float size = Mathf.Lerp(startSize, 1f, progress);
-            comboText.transform.localScale = Vector3.one * size;
-            comboText.color = Color.Lerp(flashColor, Color.yellow, progress);
-
-            yield return null;
-        }
-
-        comboText.transform.localScale = Vector3.one;
-        comboText.color = Color.yellow;
-    }
-
-    void PlayPop(float size, Color color)
-    {
-        if (popRoutine != null)
-        {
-            StopCoroutine(popRoutine);
-        }
-        popRoutine = StartCoroutine(ComboPop(size, color));
-    }
-
     public void GameOver()
     {
         isGameOver = true;
@@ -148,11 +101,13 @@ public class GameManager : MonoBehaviour
         gameOverPanel.SetActive(true);
 
         int best = PlayerPrefs.GetInt("HighScore", 0);
+
         if (score > best)
         {
             best = score;
             PlayerPrefs.SetInt("HighScore", best);
         }
+
         highScoreText.text = "High Score: " + best + "\nTime: " + timerText.text;
     }
 
