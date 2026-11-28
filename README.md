@@ -46,3 +46,12 @@ I used Claude as a tutor throughout the project to help me when I was really con
 - C#
 - Visual Studio Code
 - Hackatime
+
+## Pictures/Screenshots
+<img width="1912" height="1202" alt="image" src="https://github.com/user-attachments/assets/3bdf270e-5212-4aee-8960-644b8dc13088" />
+How the game looks when you play it.
+<img width="1916" height="1202" alt="image" src="https://github.com/user-attachments/assets/48e31e63-f3ce-4f23-a2f7-21bcc0d97416" />
+When you click the Esc (Escape) button, it will show this menu.
+<img width="1914" height="1206" alt="image" src="https://github.com/user-attachments/assets/ef5b7f64-f5b5-4753-8c18-d9480036745f" />
+Picture of the main menu.
+
