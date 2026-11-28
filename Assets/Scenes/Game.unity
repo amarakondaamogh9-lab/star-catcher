@@ -223,7 +223,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -230}
+  m_AnchoredPosition: {x: 0, y: -260}
   m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &186297662
@@ -354,7 +354,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 150}
+  m_AnchoredPosition: {x: 0, y: 300}
   m_SizeDelta: {x: 1000, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &219785585
@@ -636,9 +636,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4336e9973d3a7114ca15e1572b437ff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  highScoreText: {fileID: 1959449361}
-  timerText: {fileID: 1827839040}
-  gameOverPanel: {fileID: 424177189}
   lives: 3
   isGameOver: 0
 --- !u!114 &247237479
@@ -653,7 +650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 747d719a73728244f921ae4f2548bc1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DebugKeys
-  debugEnabled: 1
+  debugEnabled: 0
 --- !u!114 &247237480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1557,6 +1554,9 @@ MonoBehaviour:
   scoreText: {fileID: 1333448057}
   livesText: {fileID: 1268026729}
   comboText: {fileID: 563266598}
+  timerText: {fileID: 1827839040}
+  highScoreText: {fileID: 1959449361}
+  gameOverPanel: {fileID: 424177189}
 --- !u!1 &911499197
 GameObject:
   m_ObjectHideFlags: 0
@@ -2696,7 +2696,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -100}
+  m_AnchoredPosition: {x: 0, y: -130}
   m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1422074466
@@ -3371,8 +3371,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 20}
-  m_SizeDelta: {x: 800, y: 200}
+  m_AnchoredPosition: {x: 0, y: 90}
+  m_SizeDelta: {x: 800, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1959449361
 MonoBehaviour:
@@ -3421,8 +3421,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
