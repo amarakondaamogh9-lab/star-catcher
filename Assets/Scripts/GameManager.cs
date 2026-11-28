@@ -2,13 +2,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections; 
+using System;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public static event Action<int> OnScoreChanged;
+    public static event Action<int> OnLivesChanged;
 
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI livesText;
     public TextMeshProUGUI highScoreText;
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI comboText;
@@ -84,9 +85,10 @@ public class GameManager : MonoBehaviour
 
     void UpdateUI()
     {
-        scoreText.text = "Score: " + score;
-        livesText.text = "Lives: " + lives;
         comboText.text = "Combo: " + combo + " (x" + GetMultiplier() + ")";
+
+        OnScoreChanged?.Invoke(score);
+        OnLivesChanged?.Invoke(lives);
     }
 
     int GetMultiplier()
