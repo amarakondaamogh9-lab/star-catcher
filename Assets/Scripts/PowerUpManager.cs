@@ -6,9 +6,13 @@ public class PowerUpManager : MonoBehaviour
 
     public GameObject shieldVisual;
     public float slowDuration = 5f;
+    public float magnetDuration = 5f;
+    public float magnetRadius = 5f;
+    public float magnetStrength = 8f;
 
     bool hasShield;
     float slowTimer;
+    float magnetTimer;
 
     void Awake()
     {
@@ -32,6 +36,31 @@ public class PowerUpManager : MonoBehaviour
                 FallingObject.worldSpeed = 1f;
             }
         }
+
+        if (magnetTimer > 0f)
+        {
+            magnetTimer -= Time.deltaTime;
+            PullStars();
+        }
+    }
+
+    void PullStars()
+    {
+        GameObject[] stars = GameObject.FindGameObjectsWithTag("Star");
+
+        foreach (GameObject star in stars)
+        {
+            float distance = Vector3.Distance(star.transform.position, transform.position);
+
+            if (distance < magnetRadius)
+            {
+                star.transform.position = Vector3.MoveTowards(
+                    star.transform.position,
+                    transform.position,
+                    magnetStrength * Time.deltaTime
+                );
+            }
+        }
     }
 
     public void Activate(PowerUpType type)
@@ -45,6 +74,10 @@ public class PowerUpManager : MonoBehaviour
         {
             slowTimer = slowDuration;
             FallingObject.worldSpeed = 0.5f;
+        }
+        else if (type == PowerUpType.Magnet)
+        {
+            magnetTimer = magnetDuration;
         }
     }
 
