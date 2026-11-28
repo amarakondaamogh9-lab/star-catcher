@@ -7,16 +7,26 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI livesText;
     public TextMeshProUGUI comboText;
+    public TextMeshProUGUI timerText;
+    public TextMeshProUGUI highScoreText;
+    public GameObject gameOverPanel;
 
     int lastCombo;
     int lastMultiplier = 1;
     Coroutine popRoutine;
+
+    void Start()
+    {
+        gameOverPanel.SetActive(false);
+    }
 
     void OnEnable()
     {
         GameManager.OnScoreChanged += ShowScore;
         GameManager.OnLivesChanged += ShowLives;
         GameManager.OnComboChanged += ShowCombo;
+        GameManager.OnTimeChanged += ShowTime;
+        GameManager.OnGameOver += ShowGameOver;
     }
 
     void OnDisable()
@@ -24,6 +34,8 @@ public class UIManager : MonoBehaviour
         GameManager.OnScoreChanged -= ShowScore;
         GameManager.OnLivesChanged -= ShowLives;
         GameManager.OnComboChanged -= ShowCombo;
+        GameManager.OnTimeChanged -= ShowTime;
+        GameManager.OnGameOver -= ShowGameOver;
     }
 
     void ShowScore(int score)
@@ -34,6 +46,24 @@ public class UIManager : MonoBehaviour
     void ShowLives(int lives)
     {
         livesText.text = "Lives: " + lives;
+    }
+
+    void ShowTime(float time)
+    {
+        timerText.text = FormatTime(time);
+    }
+
+    void ShowGameOver(int score, int best, float time)
+    {
+        gameOverPanel.SetActive(true);
+        highScoreText.text = "Score: " + score + "\nHigh Score: " + best + "\nTime: " + FormatTime(time);
+    }
+
+    string FormatTime(float time)
+    {
+        int minutes = (int)time / 60;
+        int seconds = (int)time % 60;
+        return $"{minutes}:{seconds:00}";
     }
 
     void ShowCombo(int combo, int multiplier)
@@ -86,4 +116,4 @@ public class UIManager : MonoBehaviour
         comboText.transform.localScale = Vector3.one;
         comboText.color = Color.yellow;
     }
-}
+} 

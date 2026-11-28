@@ -9,10 +9,9 @@ public class GameManager : MonoBehaviour
     public static event Action<int> OnScoreChanged;
     public static event Action<int> OnLivesChanged;
     public static event Action<int, int> OnComboChanged;
+    public static event Action<float> OnTimeChanged;
+    public static event Action<int, int, float> OnGameOver;
 
-    public TextMeshProUGUI highScoreText;
-    public TextMeshProUGUI timerText;
-    public GameObject gameOverPanel;
     public int lives = 3;
     public bool isGameOver;
 
@@ -28,18 +27,13 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1f;
-        gameOverPanel.SetActive(false);
         UpdateUI();
     }
 
     void Update()
     {
         survivalTime += Time.deltaTime;
-
-        int minutes = (int)survivalTime / 60;
-        int seconds = (int)survivalTime % 60;
-
-        timerText.text = $"{minutes}:{seconds:00}";
+        OnTimeChanged?.Invoke(survivalTime);
     }
 
     public void AddScore(int amount)
@@ -98,7 +92,6 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         Time.timeScale = 0f;
-        gameOverPanel.SetActive(true);
 
         int best = PlayerPrefs.GetInt("HighScore", 0);
 
@@ -108,7 +101,7 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("HighScore", best);
         }
 
-        highScoreText.text = "High Score: " + best + "\nTime: " + timerText.text;
+        OnGameOver?.Invoke(score, best, survivalTime);
     }
 
     public void Restart()
